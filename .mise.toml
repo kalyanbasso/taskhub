@@ -1,0 +1,46 @@
+[tools]
+go = "1.23"
+
+[env]
+# Database configuration
+DB_HOST = "localhost"
+DB_PORT = "5432"
+DB_USER = "postgres"
+DB_PASSWORD = "password"
+DB_NAME = "taskhub"
+DB_SSLMODE = "disable"
+
+# Application configuration
+APP_PORT = "8080"
+
+# Go environment
+GO111MODULE = "on"
+CGO_ENABLED = "1"
+
+[tasks.build]
+run = "go build -o bin/main cmd/main.go"
+description = "Build the application"
+
+[tasks.run]
+run = "go run cmd/main.go"
+description = "Run the application"
+
+[tasks.test]
+run = "go test ./..."
+description = "Run tests"
+
+[tasks.fmt]
+run = "go fmt ./..."
+description = "Format Go code"
+
+[tasks.mod-tidy]
+run = "go mod tidy"
+description = "Tidy Go modules"
+
+[tasks.docker-up]
+run = "docker-compose up --build -d"
+description = "Start Docker containers"
+
+[tasks.docker-down]
+run = "docker-compose down"
+description = "Stop Docker containers"

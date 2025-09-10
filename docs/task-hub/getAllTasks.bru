@@ -1,0 +1,15 @@
+meta {
+  name: getAllTasks
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{url}}/api/v1/tasks
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
