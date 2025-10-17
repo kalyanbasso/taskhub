@@ -1,0 +1,15 @@
+meta {
+  name: getTasksByStatus
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{url}}/api/v1/tasks/status/{{completed}}
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

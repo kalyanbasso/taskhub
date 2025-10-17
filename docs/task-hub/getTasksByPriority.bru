@@ -1,0 +1,15 @@
+meta {
+  name: getTasksByPriority
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{url}}/api/v1/tasks/priority/{{priority}}
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
