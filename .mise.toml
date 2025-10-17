@@ -1,5 +1,6 @@
 [tools]
 go = "1.24.5"
+helm = "3.19.0"
 
 [env]
 # Database configuration
@@ -40,7 +41,3 @@ description = "Tidy Go modules"
 [tasks.docker-up]
 run = "docker-compose up --build -d"
 description = "Start Docker containers"
-
-[tasks.docker-down]
-run = "docker-compose down"
-description = "Stop Docker containers"

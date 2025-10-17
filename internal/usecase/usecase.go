@@ -37,23 +37,23 @@ func (uc *taskUseCase) CreateTask(req *model.CreateTaskRequest) (*model.TaskResp
 
 	// Validar prioridade
 	if req.Priority != "" {
-		if req.Priority != model.PriorityLow && req.Priority != model.PriorityMedium && req.Priority != model.PriorityHigh {
+		if !req.Priority.IsValid() {
 			return nil, ErrInvalidPriority
 		}
 	} else {
-		req.Priority = model.PriorityMedium // default
+		req.Priority = model.DefaultPriority()
 	}
 
-	// Validar due_date
-	if req.DueDate != nil && req.DueDate.Before(time.Now()) {
-		return nil, errors.New("due date cannot be in the past")
+	// Validar deadline
+	if req.Deadline != nil && req.Deadline.Before(time.Now()) {
+		return nil, errors.New("deadline cannot be in the past")
 	}
 
 	task := &model.Task{
 		Title:       req.Title,
 		Description: req.Description,
 		Priority:    req.Priority,
-		DueDate:     req.DueDate,
+		Deadline:    req.Deadline,
 		Completed:   false,
 	}
 
@@ -118,18 +118,18 @@ func (uc *taskUseCase) UpdateTask(id uint, req *model.UpdateTaskRequest) (*model
 	}
 
 	if req.Priority != nil {
-		if *req.Priority != model.PriorityLow && *req.Priority != model.PriorityMedium && *req.Priority != model.PriorityHigh {
+		if !(*req.Priority).IsValid() {
 			return nil, ErrInvalidPriority
 		}
 		task.Priority = *req.Priority
 	}
 
-	if req.DueDate != nil && req.DueDate.Before(time.Now()) {
-		return nil, errors.New("due date cannot be in the past")
+	if req.Deadline != nil && req.Deadline.Before(time.Now()) {
+		return nil, errors.New("deadline cannot be in the past")
 	}
 
-	if req.DueDate != nil {
-		task.DueDate = req.DueDate
+	if req.Deadline != nil {
+		task.Deadline = req.Deadline
 	}
 
 	if err := uc.taskRepo.Update(task); err != nil {
@@ -218,7 +218,7 @@ func (uc *taskUseCase) GetOverdueTasks() ([]*model.TaskResponse, error) {
 	var overdueTasks []*model.TaskResponse
 
 	for _, task := range tasks {
-		if task.DueDate != nil && task.DueDate.Before(now) && !task.Completed {
+		if task.Deadline != nil && task.Deadline.Before(now) && !task.Completed {
 			overdueTasks = append(overdueTasks, task.ToResponse())
 		}
 	}

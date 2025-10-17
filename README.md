@@ -1,10 +1,12 @@
 # TaskHub API
 
-Uma API REST para gerenciamento de tarefas (TaskHub) construída e## Como Executar
+Uma API REST para gerenciamento de tarefas (TaskHub)
+
+## Como Executar
 
 ### Pré-requisitos
 - Docker e Docker Compose
-- Go 1.23+ (para desenvolvimento local)
+- Go 1.24+ (para desenvolvimento local)
 - jq (para testes com formatação JSON)
 - [mise](https://mise.jdx.dev/) (opcional, para gerenciamento de dependências)
 
@@ -37,8 +39,6 @@ mise run test        # Executa testes
 mise run fmt         # Formata código Go
 mise run build       # Constrói a aplicação
 ```
-
-> Para mais detalhes sobre o mise, veja [MISE.md](./MISE.md)
 
 ### Com Docker Compose
 
@@ -135,50 +135,6 @@ docker-compose up --build -d
 }
 ```
 
-## Como Executar
-
-### Pré-requisitos
-- Docker e Docker Compose
-- Go 1.21+ (para desenvolvimento local)
-
-### Com Docker Compose (Recomendado)
-
-1. Clone o repositório:
-```bash
-git clone <repository-url>
-cd taskhub
-```
-
-2. Execute com Docker Compose:
-```bash
-docker-compose up --build
-```
-
-3. A API estará disponível em `http://localhost:8080`
-
-### Desenvolvimento Local
-
-1. Configure as variáveis de ambiente:
-```bash
-cp .env.example .env
-# Edite o arquivo .env conforme necessário
-```
-
-2. Execute o PostgreSQL:
-```bash
-docker run --name postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=taskhub -p 5432:5432 -d postgres:15-alpine
-```
-
-3. Instale as dependências:
-```bash
-go mod download
-```
-
-4. Execute a aplicação:
-```bash
-go run cmd/main.go
-```
-
 ## Exemplos de Uso
 
 ### Criar uma nova tarefa
@@ -226,11 +182,3 @@ O projeto segue os princípios de Clean Architecture:
 - **Repository**: Abstrai o acesso aos dados
 - **Model**: Define as estruturas de dados
 - **Config**: Gerencia configurações e variáveis de ambiente
-
-## Contribuição
-
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
